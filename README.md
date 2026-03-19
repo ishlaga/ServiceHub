@@ -245,31 +245,6 @@ ServiceHub/
 └── README.md                        # This file
 ```
 
-## Configuration
-
-### Backend Configuration (application.properties)
-
-The main configuration file is located at: [Backend/springboot_example/application.properties](Backend/springboot_example/application.properties)
-
-**Key Properties:**
-
-```properties
-# Server Configuration
-server.port=8080
-
-# Database Configuration
-spring.datasource.url=jdbc:mysql://coms-309-063.class.las.iastate.edu:3306/coms_309
-spring.datasource.username=ec3
-spring.datasource.password=coms309
-spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
-
-# JPA/Hibernate Configuration
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5Dialect
-spring.jpa.properties.hibernate.format_sql=true
-spring.jpa.show-sql=true
-```
-
 ## Database
 
 ### Database Setup
