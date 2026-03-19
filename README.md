@@ -1,97 +1,397 @@
-https://www.youtube.com/watch?v=6wb6DCyux2I&t=3s
+# ServiceHub
 
+A comprehensive service booking and management platform built with Spring Boot backend and Android frontend. ServiceHub enables users to discover, book, and manage various services including carpooling, tutoring, home services, and more through an intuitive mobile interface.
 
-## TA_122
+## Table of Contents
 
+- [Project Overview](#project-overview)
+- [Features](#features)
+- [Architecture](#architecture)
+- [Tech Stack](#tech-stack)
+- [Prerequisites](#prerequisites)
+- [Installation & Setup](#installation--setup)
+- [Backend Setup](#backend-setup)
+- [Frontend Setup](#frontend-setup)
+- [Project Structure](#project-structure)
+- [Configuration](#configuration)
+- [Database](#database)
+- [API Documentation](#api-documentation)
+- [Testing](#testing)
+- [Team & Contributors](#team--contributors)
+- [License](#license)
 
+## Project Overview
 
-## Getting started
+ServiceHub is a full-stack application designed to connect service providers with customers. The platform supports multiple service categories and provides real-time communication through WebSocket integration. This is a collaborative project developed as part of an educational initiative with multiple team members contributing specialized modules.
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+## Features
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+- **Multiple Service Categories**
+  - User Profile Management
+  - Booking & Reservation System
+  - Carpooling Services
+  - Real-time Chat
+  - Cleaning Services
+  - Home Services
+  - Painting Services
+  - Plumbing Services
+  - Tutoring/Education Services
 
-## Add your files
+- **Backend Capabilities**
+  - RESTful API architecture
+  - WebSocket support for real-time communication
+  - Database persistence with MySQL and ORM (Hibernate/JPA)
+  - Comprehensive testing framework
+  - Swagger/SpringFox API documentation
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+- **Frontend Features**
+  - Native Android application
+  - User authentication and profile management
+  - Service browsing and booking interface
+  - Real-time messaging
+  - Responsive UI/UX design
+
+## Architecture
+
+The application follows a standard three-tier architecture:
 
 ```
-cd existing_repo
-git remote add origin https://git.las.iastate.edu/cs309/fall2023/ta_122.git
-git branch -M main
-git push -uf origin main
+┌─────────────────────────────────────┐
+│      Android Frontend (Gradle)      │
+│   - User Interface & Navigation     │
+│   - Service Browsing & Booking      │
+└──────────────┬──────────────────────┘
+               │ HTTP/WebSocket
+┌──────────────▼──────────────────────┐
+│   Spring Boot REST API (Maven)      │
+│   - Service Management              │
+│   - User Management                 │
+│   - Booking & Reservation           │
+│   - Real-time Communication         │
+└──────────────┬──────────────────────┘
+               │ JDBC/JPA
+┌──────────────▼──────────────────────┐
+│      MySQL Database                 │
+│   - User Data                       │
+│   - Service Information             │
+│   - Booking Records                 │
+│   - Chat Messages                   │
+└─────────────────────────────────────┘
 ```
 
-## Integrate with your tools
+## Tech Stack
 
-- [ ] [Set up project integrations](https://git.las.iastate.edu/cs309/fall2023/ta_122/-/settings/integrations)
+### Backend
+- **Framework**: Spring Boot 2.4.0
+- **Java Version**: 11
+- **Build Tool**: Maven
+- **ORM**: Hibernate/JPA
+- **Database**: MySQL
+- **WebSocket**: Spring WebSocket
+- **Testing**: JUnit 4, REST-Assured
+- **Additional Libraries**: Lombok, Jackson, JAXB
 
-## Collaborate with your team
+### Frontend
+- **Platform**: Android
+- **Build Tool**: Gradle
+- **Language**: Java
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+### Documentation
+- **API Documentation**: Swagger/SpringFox
+- **JavaDoc**: Comprehensive API documentation available in `/Documents/APIFrontend/javadoc/`
 
-## Test and Deploy
+## Prerequisites
 
-Use the built-in continuous integration in GitLab.
+### For Backend Development
+- Java Development Kit (JDK) 11 or higher
+- Maven 3.6 or higher
+- MySQL Server (running and accessible)
+- Curl or Postman for API testing
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+### For Frontend Development
+- Android SDK API 21 or higher
+- Android Studio or compatible IDE
+- Gradle 6.0 or higher
 
-***
+## Installation & Setup
 
-# Editing this README
+### Clone the Repository
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
+```bash
+git clone <repository-url>
+cd servicehub
+```
 
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+## Backend Setup
 
-## Name
-Choose a self-explaining name for your project.
+### 1. Database Configuration
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+Before running the backend, ensure MySQL is running and accessible:
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+- **Default Connection String**: `jdbc:mysql://coms-309-063.class.las.iastate.edu:3306/coms_309`
+- **Default Username**: `ec3`
+- **Default Password**: `coms309`
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+To modify database credentials, edit [Backend/springboot_example/application.properties](Backend/springboot_example/application.properties):
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+```properties
+spring.datasource.url=jdbc:mysql://your-host:3306/your-database
+spring.datasource.username=your-username
+spring.datasource.password=your-password
+```
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+### 2. Build the Backend
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+```bash
+cd Backend/springboot_example
+mvn clean install
+```
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+### 3. Run the Spring Boot Application
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+```bash
+mvn spring-boot:run
+```
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+The backend server will start on `http://localhost:8080`
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+### 4. Verify Backend is Running
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+Test the API with a simple health check:
+
+```bash
+curl http://localhost:8080/
+```
+
+## Frontend Setup
+
+### 1. Open Android Project
+
+```bash
+cd Frontend/servicehub
+```
+
+Open the project in Android Studio or your IDE.
+
+### 2. Build the APK
+
+```bash
+./gradlew build
+```
+
+### 3. Install on Device/Emulator
+
+```bash
+./gradlew installDebug
+```
+
+Or use Android Studio's built-in emulator runner.
+
+### 4. Configure API Endpoint
+
+Update the API endpoint in the Android application to point to your backend server:
+- Change `localhost:8080` to your backend server address if running remotely
+
+## Project Structure
+
+```
+ServiceHub/
+├── Backend/
+│   ├── springboot_example/          # Main Spring Boot Application
+│   │   ├── src/main/java/onetoone/  # Source Code
+│   │   │   ├── Users/               # User management module
+│   │   │   ├── Profile/             # Profile management
+│   │   │   ├── Booking/             # Booking system
+│   │   │   ├── Reservation/         # Reservation management
+│   │   │   ├── Chat/                # Real-time chat
+│   │   │   ├── Carpooling/          # Carpooling service
+│   │   │   ├── HomeService/         # General home services
+│   │   │   ├── Cleaning/            # Cleaning service
+│   │   │   ├── Painting/            # Painting service
+│   │   │   ├── Plumbing/            # Plumbing service
+│   │   │   ├── Tutors/              # Tutoring service
+│   │   │   ├── Main.java            # Application entry point
+│   │   │   └── SpringFoxConfig.java # API documentation config
+│   │   ├── src/main/resources/      # Configuration and templates
+│   │   ├── src/test/                # Unit and integration tests
+│   │   ├── pom.xml                  # Maven dependencies
+│   │   ├── application.properties   # Application configuration
+│   │   ├── Client_JS/               # JavaScript test client
+│   │   └── testClient.html          # HTML test client
+│   └── .mvn/                        # Maven wrapper
+│
+├── Frontend/
+│   └── servicehub/                  # Android Application
+│       ├── app/                     # Main app module
+│       │   ├── src/                 # Source code and resources
+│       │   └── build.gradle         # Gradle build configuration
+│       ├── gradle/                  # Gradle build files
+│       ├── build.gradle             # Project build configuration
+│       ├── settings.gradle          # Gradle project settings
+│       └── gradlew                  # Gradle wrapper
+│
+├── Documents/
+│   ├── APIFrontend/javadoc/         # Generated JavaDoc for API
+│   ├── outputs-Ldutta/javadoc/      # Team member's API documentation
+│   ├── Test Results/                # Test execution results
+│   └── test.txt                     # Test logs
+│
+├── Experiments/
+│   ├── ec3/                        # ec3's experimental modules
+│   ├── Ldutta/                     # Ldutta's experimental modules
+│   ├── npathuri/                   # npathuri's experimental modules
+│   └── yvarun79/                   # yvarun79's experimental modules
+│
+└── README.md                        # This file
+```
+
+## Configuration
+
+### Backend Configuration (application.properties)
+
+The main configuration file is located at: [Backend/springboot_example/application.properties](Backend/springboot_example/application.properties)
+
+**Key Properties:**
+
+```properties
+# Server Configuration
+server.port=8080
+
+# Database Configuration
+spring.datasource.url=jdbc:mysql://coms-309-063.class.las.iastate.edu:3306/coms_309
+spring.datasource.username=ec3
+spring.datasource.password=coms309
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+# JPA/Hibernate Configuration
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5Dialect
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.show-sql=true
+```
+
+## Database
+
+### Database Setup
+
+The application uses MySQL with Hibernate ORM for automatic schema generation and management.
+
+**Key Features:**
+- Automatic schema creation via `spring.jpa.hibernate.ddl-auto=update`
+- Support for one-to-one, one-to-many, and many-to-many relationships
+- Persistence of user data, service information, bookings, and messages
+
+### Database Schema
+
+The database includes tables for:
+- Users and authentication
+- Service profiles and details
+- Bookings and reservations
+- Chat messages and conversations
+- User profiles and preferences
+
+Hibernate will automatically create and manage these tables on first run.
+
+## API Documentation
+
+### Accessing API Documentation
+
+Once the backend is running, access the Swagger UI at:
+```
+http://localhost:8080/swagger-ui.html
+```
+
+This provides interactive API documentation where you can test all endpoints.
+
+### Generated JavaDoc
+
+Complete JavaDoc documentation is available in:
+- [Documents/APIFrontend/javadoc/index.html](Documents/APIFrontend/javadoc/index.html) - Main API documentation
+- [Documents/outputs-Ldutta/javadoc/index.html](Documents/outputs-Ldutta/javadoc/index.html) - Additional team documentation
+
+Generate fresh JavaDoc with Maven:
+```bash
+mvn javadoc:javadoc
+```
+
+## Testing
+
+### Backend Testing
+
+The project includes comprehensive test suites using JUnit and REST-Assured.
+
+**Run all tests:**
+```bash
+cd Backend/springboot_example
+mvn test
+```
+
+**Run specific test class:**
+```bash
+mvn test -Dtest=YourTestClassName
+```
+
+**Test reports** are available in [Documents/Test Results/](Documents/Test%20Results/)
+
+### Testing with JavaScript Client
+
+A JavaScript-based test client is available for manual API testing:
+- File: [Backend/springboot_example/Client_JS/index.html](Backend/springboot_example/Client_JS/index.html)
+- Static HTML test client: [Backend/springboot_example/testClient.html](Backend/springboot_example/testClient.html)
+
+Open these files in a browser to test the API with WebSocket support.
+
+## Team & Contributors
+
+ServiceHub is a collaborative project with contributions from multiple team members:
+
+- **ec3** - [Experiments/ec3/](Experiments/ec3/)
+- **Ldutta** - [Experiments/Ldutta/](Experiments/Ldutta/)
+- **npathuri** - [Experiments/npathuri/](Experiments/npathuri/)
+- **yvarun79** - [Experiments/yvarun79/](Experiments/yvarun79/)
+
+Each team member has their own experimental directory containing specialized implementations and variations of the ServiceHub platform.
+
+## Support & Troubleshooting
+
+### Common Issues
+
+**Database Connection Failed**
+- Ensure MySQL is running: `mysql -u root -p`
+- Verify credentials in `application.properties`
+- Check MySQL server is accessible at configured host/port
+
+**Port 8080 Already in Use**
+- Change port in `application.properties`: `server.port=8081`
+- Or kill the process using port 8080
+
+**Android Build Failures**
+- Update Android SDK: Open SDK Manager in Android Studio
+- Clear Gradle cache: `./gradlew clean`
+- Rebuild project: `./gradlew build`
+
+### Getting Help
+
+- Check API documentation at `http://localhost:8080/swagger-ui.html`
+- Review test files for usage examples
+- Check generated JavaDoc for API details
+- Review team member experiments for alternative implementations
+
+## Future Enhancements
+
+Potential areas for expansion:
+- Payment integration for service bookings
+- Rating and review system
+- Advanced search and filtering
+- Push notifications
+- Analytics dashboard
+- Third-party service integrations
 
 ## License
-For open source projects, say how it is licensed.
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+This project is part of an educational initiative at Iowa State University (CS 309 Course).
 
-Testing main branch.
+---
+
+**Last Updated**: March 2026
+**Version**: 1.0.0
